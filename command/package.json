@@ -57,9 +57,9 @@
         "zod": "^3.24.3"
     },
     "devDependencies": {
-        "eslint": "^8",
-        "eslint-config-next": "15.0.3",
+        "eslint": "^9",
+        "eslint-config-next": "15.3.2",
         "postcss": "^8",
-        "tailwindcss": "^3.4.13"
+        "tailwindcss": "^4.1.6"
     }
 }

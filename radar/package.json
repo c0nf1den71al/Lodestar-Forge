@@ -11,6 +11,6 @@
     "postgres": "^3.4.4"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.24.2"
+    "drizzle-kit": "^0.31.1"
   }
 }
