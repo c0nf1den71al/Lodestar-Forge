@@ -16,11 +16,9 @@ export default async function RootLayout(props) {
     return (
         <SidebarProvider>
             <AppSidebar projectId={projectId} />
-            <SidebarInset>
-                <div className="bg-muted/40 flex-1 overflow-hidden">
-                    <div className="h-full overflow-auto">{children}</div>
-                </div>
-            </SidebarInset>
+            <main className="bg-muted/40 flex-1 overflow-hidden">
+                <div className="h-full overflow-auto">{children}</div>
+            </main>
         </SidebarProvider>
     );
 }
