@@ -4,6 +4,13 @@ import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { SheetLeftbar } from "./leftbar";
 import Image from "next/image";
+import AlgoliaSearch from "./algolia-search";
+
+const algolia_props = {
+    appId: process.env.ALGOLIA_APP_ID!,
+    indexName: process.env.ALGOLIA_INDEX!,
+    apiKey: process.env.ALGOLIA_SEARCH_API_KEY!,
+};
 
 export function Navbar() {
     return (
@@ -20,6 +27,8 @@ export function Navbar() {
 
                 <div className="flex items-center sm:justify-normal justify-between sm:gap-3 ml-1 sm:w-fit w-[90%]">
                     <div className="flex items-center justify-between sm:gap-2">
+                        <AlgoliaSearch {...algolia_props} />
+
                         <div className="flex ml-4 sm:ml-0">
                             <Link
                                 href="https://github.com/c0nf1den71al/Lodestar-Forge"
