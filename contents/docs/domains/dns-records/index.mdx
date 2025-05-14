@@ -1,0 +1,56 @@
+---
+title: DNS Records
+description: How to manage a domains DNS records within Lodestar Forge.
+---
+
+When domains have been added to Forge, its DNS records are automatically scanned and added by the Radar component. DNS records are currently for informational purposes only, adding a DNS record through the UI will not affect the actual records associated with the domain.
+
+## Adding A DNS Record
+To add a DNS record to a domain within Lodestar Forge, simply follow the steps below.
+
+<Note>
+    DNS Rcords can only be added manually when "DNS Auto Scan" is disabled. This is seperate to the triage "Auto Scan". Please see the section below for more informaiton.
+</Note>
+
+1. Ensure the correct project is selected within the project switcher.
+2. Select "Domains" in the sidebar.
+3. Locate and select the domain you wish to modify.
+4. Click "Add" within the "DNS Records" card.
+5. Complete the form to add the DNS record.
+
+![Adding a DNS record](/images/add-dns-record.png)
+
+## DNS Auto Scan
+As mentioned above, DNS records are automatically added when the "DNS Auto Scan" feature is enabled. This feature is enabled by default and scans the domain's DNS records and adds them to the domain's DNS records list. DNS auto scan can be toggled using the following steps.
+
+<Note type="warning" title="Warning">
+    Once DNS auto scan is enabled, any manually added DNS records will be overwritten.
+</Note>
+
+DNS auto scan can be enabled or disabled by following these steps.
+1. Ensure the correct project is selected within the project switcher.
+2. Select "Domains" in the sidebar.
+3. Locate and select the domain you wish to modify.
+4. Click the settings "cog" within the "DNS Records" card.
+5. Check or uncheck the "Enable Auto Scan" option.
+6. Select "Save" to apply the changes.
+
+![DNS autoscan settings](/images/dns-autoscan.png)
+
+
+## Removing A DNS Record
+To remove a DNS record from a domain in Forge, simply follow the steps below.
+
+<Note type="danger">
+    Removing a DNS record is a permanent action and cannot be undone.
+</Note>
+
+1. Ensure the correct project is selected within the project switcher.
+2. Select "Domains" in the sidebar.
+3. From the "Domains" table, select the domain you wish to modify.
+4. Within the "DNS Records" table, identify the DNS record you wish to remove.
+5. Select the actions menu by clicking the "..." button.
+6. Select "Remove" from the menu.
+7. Confirm the removal by selecting "Delete" in the confirmation dialog.
+
+![Removing a DNS record](/images/remove-dns-record.png)

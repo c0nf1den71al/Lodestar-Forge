@@ -1,0 +1,47 @@
+---
+title: Managing Domains
+description: How to manage domains within Lodestar Forge.
+---
+
+Domains can easily be managed within Lodestar Forge. This section covers how to add and remove domains, alongside autoscan capabilities.
+
+## Adding A Domain
+To add a domain to Forge, simply follow the steps below.
+1. With a project selected, select the "Domains" tab in the sidebar.
+2. Click the "Add Domain" button.
+3. Complete the form to add your domain.
+
+![Adding a domain](/images/add-domain.png)
+
+## Domain Autoscan
+Domains are automatically scanned for signs of triage by the blue team. This is done by utilising the VirusTotal API - the domain is marked as "burnt" if any of the following conditions are met:
+- The domain has been analysed within the past 24 hours.
+- The domain has a "suspicious" reputation from at least one vendor.
+- The domain has a "malicious" reputation from at least one vendor.
+- More checks coming soon...
+
+Auto scan can be enabled or disabled by following these steps.
+1. Ensure the correct project is selected within the project switcher.
+2. Select "Domains" in the sidebar.
+3. Locate the domain you wish to modify.
+4. Click the settings "cog" within the "Health Overview" card.
+5. Check or uncheck the "Auto Scan" option.
+6. Select "Save" to apply the changes.
+
+![Domain autoscan settings](/images/domain-autoscan.png)
+
+
+## Remove A Domain
+To remove a domain from Forge, simply follow the steps below.
+
+<Note type="danger">
+    Removing a domain is a permanent action and cannot be undone. Any infrastructure which relies on the domain will not be affected.
+</Note>
+
+1. Ensure the correct project is selected within the project switcher.
+2. Select "Domains" in the sidebar.
+3. From the "Domains" table, select the domain you wish to remove.
+4. Within the "Danger Zone", click the "Delete Domain" button.
+5. Confirm the deletion by clicking the "Delete" button.
+
+![Removing a domain](/images/remove-domain.png)

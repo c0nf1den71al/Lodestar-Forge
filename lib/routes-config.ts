@@ -84,7 +84,16 @@ export const ROUTES: EachRoute[] = [
     {
         title: "Domains",
         href: "/domains",
-        items: [],
+        items: [
+            {
+                title: "Managing Domains",
+                href: "/managing-domains",
+            },
+            {
+                title: "DNS Records",
+                href: "/dns-records",
+            },
+        ],
     },
     {
         title: "Settings",

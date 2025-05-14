@@ -1,8 +1,9 @@
 import { ModeToggle } from "@/components/theme-toggle";
-import { GithubIcon, Anvil } from "lucide-react";
+import { GithubIcon } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { SheetLeftbar } from "./leftbar";
+import Image from "next/image";
 
 export function Navbar() {
     return (
@@ -41,7 +42,7 @@ export function Navbar() {
 export function Logo() {
     return (
         <Link href="/" className="flex items-center gap-2.5">
-            <Anvil className="w-6 h-6" strokeWidth={2} />
+            <Image src="/logo-small.png" alt="Logo" width={24} height={24} />
             <h2 className="text-md font-semibold pt-1">Lodestar Forge</h2>
         </Link>
     );
