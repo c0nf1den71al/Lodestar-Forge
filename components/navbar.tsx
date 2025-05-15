@@ -1,10 +1,28 @@
 import { ModeToggle } from "@/components/theme-toggle";
-import { GithubIcon } from "lucide-react";
+import { GithubIcon, TwitterIcon, CommandIcon } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
+import Anchor from "./anchor";
 import { SheetLeftbar } from "./leftbar";
-import Image from "next/image";
+import { page_routes } from "@/lib/routes-config";
+import { SheetClose } from "@/components/ui/sheet";
 import AlgoliaSearch from "./algolia-search";
+import Image from "next/image";
+
+export const NAVLINKS = [
+    {
+        title: "Documentation",
+        href: `/docs${page_routes[0].href}`,
+    },
+    {
+        title: "Blog",
+        href: "/blog",
+    },
+    {
+        title: "API",
+        href: "https://api.lodestar-forge.com",
+    },
+];
 
 const algolia_props = {
     appId: process.env.ALGOLIA_APP_ID!,
@@ -22,13 +40,15 @@ export function Navbar() {
                         <div className="lg:flex hidden">
                             <Logo />
                         </div>
+                        <div className="md:flex hidden items-center gap-4 text-sm font-medium text-muted-foreground">
+                            <NavMenu />
+                        </div>
                     </div>
                 </div>
 
                 <div className="flex items-center sm:justify-normal justify-between sm:gap-3 ml-1 sm:w-fit w-[90%]">
+                    <AlgoliaSearch {...algolia_props} />
                     <div className="flex items-center justify-between sm:gap-2">
-                        <AlgoliaSearch {...algolia_props} />
-
                         <div className="flex ml-4 sm:ml-0">
                             <Link
                                 href="https://github.com/c0nf1den71al/Lodestar-Forge"
@@ -52,7 +72,34 @@ export function Logo() {
     return (
         <Link href="/" className="flex items-center gap-2.5">
             <Image src="/logo-small.png" alt="Logo" width={24} height={24} />
-            <h2 className="text-md font-semibold pt-1">Lodestar Forge</h2>
+            <h2 className="text-md font-semibold">Lodestar Forge</h2>
         </Link>
+    );
+}
+
+export function NavMenu({ isSheet = false }) {
+    return (
+        <>
+            {NAVLINKS.map((item) => {
+                const Comp = (
+                    <Anchor
+                        key={item.title + item.href}
+                        activeClassName="!text-primary dark:font-medium font-semibold"
+                        absolute
+                        className="flex items-center gap-1 sm:text-sm text-[14.5px] dark:text-stone-300/85 text-stone-800"
+                        href={item.href}
+                    >
+                        {item.title}
+                    </Anchor>
+                );
+                return isSheet ? (
+                    <SheetClose key={item.title + item.href} asChild>
+                        {Comp}
+                    </SheetClose>
+                ) : (
+                    Comp
+                );
+            })}
+        </>
     );
 }

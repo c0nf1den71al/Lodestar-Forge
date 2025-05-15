@@ -1,0 +1,162 @@
+---
+title: "Deploying Mythic C2 with Lodestar Forge"
+description: "Learn how to deploy infrastructure with Lodestar Forge. This introductory tutorial will guide you through the process of deploying Mythic C2 to AWS using Lodestar Forge."
+date: 16-05-2025
+cover: "/images/deploying-mythic-c2-with-lodestar-forge.png"
+---
+
+## Overview
+This video guide will walk you through the basics of Lodestar Forge and provide you with a step-by-step guide to deploying Mythic C2 to AWS using Lodestar Forge.
+
+<div style={{position:"relative", padding:"56.25% 0 0 0"}}>
+<iframe style={{position:"absolute", top:"0", left:"0", width:"100%", height:"100%"}} suppressHydrationWarning src="https://player.vimeo.com/video/1084803963?h=3d1a948dad&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="Deploying Mythic C2 with Lodestar Forge"></iframe>
+</div>
+
+## Transcript (Auto-generated)
+
+ Hi everybody.
+ Welcome to this quick introduction to Lodestar Forge.
+ If you're not familiar with Forge already,
+ it's a platform which allows you to create and configure infrastructure specifically for Red Team engagements within In this video,
+ we're going to be deploying Mythic C2 as an example,
+ just to get familiar with deployments within Forge and how they work.
+ So I've got a default sort of Forge setup here.
+ I've created an example project called Acme Corp.
+ Red Team and I've configured some of the settings which I'll show you now.
+ If we head to the Infrastructure tab,
+ you can see I've added a tailscale tag.
+ Now,
+ Lodestar Forge.
+ This is defined within my tailscale ACL and it also allows sort of any infrastructure created by Forge to communicate with each other.
+ If I head to the Integrations tab,
+ you can see I've added AWS,
+ DigitalOcean and Tailscale.
+ If we head to SSH keys,
+ you can see I've created an example SSH key.
+ You can create SSH keys really easily by selecting the Create key button.
+ Currently they can't be imported due to requiring the public and private key.
+ However,
+ you do have the option to download the SSH keys which,
+ once you've created them.
+ All of the templates I'm using are,
+ default to Forge.
+ None of them here have been kind of customized.
+ These are all out the box.
+ We're going to be using the mythic C2 install configuration template.
+ I'll go through this later.
+ So if we head back to our project and select Deployments,
+ we can go ahead and create a new deployment.
+ I'm just going to call this primary deployment for the platform.
+ I'm going to use AWS for this video,
+ the region I'm going to select US East 1,
+ the tailscale key we added and the SSH key we can go ahead and click Create and that shows up here.
+ If we select that,
+ we can go ahead and prepare the infrastructure.
+ whilst that's preparing,
+ I'll go ahead and explain what that does.
+ So the prepare stage of a deployment essentially creates all of the underlying infrastructure that we may need to use when we add our own infrastructure.
+ So that includes things like the networking vpc,
+ any subnets,
+ SSH keys within the cloud provider and so on.
+ This should only take a couple minutes.
+ So I will go ahead and pause the video and I'll resume this once it's done.
+ Whilst this deployment is preparing,
+ I quickly want to demonstrate the deployment log feature.
+ So within the deployment,
+ if you head to this deployment log button here,
+ we can actually view the deployment logs live.
+ You can see here that Terraform is currently creating all of our infrastructure.
+ we're currently waiting for the NAT gateway to be created which should hopefully not take too much longer.
+ As before,
+ I'll resume this video once the infrastructure has been prepared.
+ So we can now see that the infrastructure has been prepared.
+ and the deployment has moved to this ready to deploy stage.
+ At this point we can now add our own infrastructure.
+ I'll go ahead and do that.
+ I'm going to put mythic C2 as the name for the template.
+ We're going to select the C2 server.
+ Now this won't actually install Mythic at this stage.
+ However,
+ this is just the underlying infrastructure which we can later add Mythic to so we can click next.
+ It requires some variables.
+ first of all is the instance ami.
+ I actually have an AMI copied.
+ This is just Ubuntu,
+ the subnet.
+ We're going to place this on the private subnet.
+ we're going to select main VPC so we can select add here which is going to add the infrastructure and we can go ahead and deploy that.
+ So the deploy stage is essentially used for kind of creating any custom infrastructure that we add.
+ Now this shouldn't take too long,
+ but whilst that's deploying I'll go ahead and show you the default infrastructure which was created.
+ You can see we've got NAT gateways,
+ Internet gateways,
+ key pairs,
+ sort of root table associations,
+ any subnets.
+ Currently the networking can't be customized.
+ there's just kind of a default network for AWS and Also one for DigitalOcean.
+ Now in the future I am planning on adding sort of a network manager.
+ However this probably won't be for a while.
+ So if we head back to our deployment,
+ we can see now that the deployment is ready to configure and our mythic C2 instance has been created.
+ If we select this again we can view any resources associated with the instance and here we can add configurations.
+ So we can go ahead,
+ select add,
+ edit and then add configuration template.
+ We can add the mythic C2 install and it's going to require a few variables.
+ So I'm just going to use admin admin as the username and password and Then example Operation as the operation name.
+ We can go ahead and add this.
+ Now the mythic C2 install does also require Docker to be installed.
+ So we can go ahead and add that.
+ and we want to make sure that Docker is installed before we install Mythic.
+ So we can go ahead,
+ save that,
+ head back to the deployment and we can select Configure.
+ You might have noticed on the previous menu there that a tailscale IP has been automatically assigned.
+ So Forge essentially manually kind of overwrites any cloud data provided to use the user init script to install tailscale.
+ So as you can see,
+ this is configuring.
+ If we go ahead and view the deployment log and scroll all the way to the bottom,
+ you can see that this is successfully installed Docker and it's now starting Mythic.
+ This should only take a little longer.
+ If we just give this a moment,
+ we should hopefully have a working Mythic instance.
+ I'm going to go ahead and pause the video until this is done.
+ As you can see,
+ Ansible is now finished and the deployment is set to live.
+ We can also see the mythic C2 server,
+ is running.
+ Now.
+ My host is connected to Tailscale.
+ Therefore we can go into the piece of infrastructure,
+ grab If we grab the tailscale ip,
+ we should just be able to navigate to the default Mythic port,
+ which I believe is 7443.
+ Accept this prompt
+ and we can connect to our Mythic instance.
+ So from here we can log in with the credentials which we created,
+ which was admin and admin,
+ and you can see that Mythic is up and running now.
+ Currently,
+ we don't have sort of any,
+ kind of plugins installed for Mythic.
+ What we can go ahead and do is use the SSH key we created earlier to sort of login and configure Mythic if we need.
+ I'm not going to cover that in this video.
+ So that's how you can create a basic C2 server within Forge.
+ This is obviously a very simple deployment.
+ You can make these as simple or as complex as you like.
+ If you want to add,
+ you know,
+ redirectors,
+ phishing servers,
+ you can go ahead and do that.
+ It's also important to remember that the sort of templates included with Forge are just merely examples.
+ You should definitely spend some time sort of configuring and adding your own templates which really meet your needs.
+ That's going to conclude this video.
+ I have lots in store for Forge in the future.
+ Hopefully lots of exciting updates upcoming,
+ so please stay tuned.
+ Thank you,
+ everybody.
+
+<script src="https://player.vimeo.com/api/player.js"></script>
