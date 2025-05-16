@@ -2,161 +2,131 @@
 title: "Deploying Mythic C2 with Lodestar Forge"
 description: "Learn how to deploy infrastructure with Lodestar Forge. This introductory tutorial will guide you through the process of deploying Mythic C2 to AWS using Lodestar Forge."
 date: 16-05-2025
-cover: "/images/deploying-mythic-c2-with-lodestar-forge.png"
+cover: "/images/blogs/deploying-mythic-c2-with-lodestar-forge/banner.png"
 ---
 
-## Overview
 This video guide will walk you through the basics of Lodestar Forge and provide you with a step-by-step guide to deploying Mythic C2 to AWS using Lodestar Forge.
 
 <div style={{position:"relative", padding:"56.25% 0 0 0"}}>
 <iframe style={{position:"absolute", top:"0", left:"0", width:"100%", height:"100%"}} suppressHydrationWarning src="https://player.vimeo.com/video/1084803963?h=3d1a948dad&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="Deploying Mythic C2 with Lodestar Forge"></iframe>
 </div>
 
-## Transcript (Auto-generated)
+## Introduction
 
- Hi everybody.
- Welcome to this quick introduction to Lodestar Forge.
- If you're not familiar with Forge already,
- it's a platform which allows you to create and configure infrastructure specifically for Red Team engagements within In this video,
- we're going to be deploying Mythic C2 as an example,
- just to get familiar with deployments within Forge and how they work.
- So I've got a default sort of Forge setup here.
- I've created an example project called Acme Corp.
- Red Team and I've configured some of the settings which I'll show you now.
- If we head to the Infrastructure tab,
- you can see I've added a tailscale tag.
- Now,
- Lodestar Forge.
- This is defined within my tailscale ACL and it also allows sort of any infrastructure created by Forge to communicate with each other.
- If I head to the Integrations tab,
- you can see I've added AWS,
- DigitalOcean and Tailscale.
- If we head to SSH keys,
- you can see I've created an example SSH key.
- You can create SSH keys really easily by selecting the Create key button.
- Currently they can't be imported due to requiring the public and private key.
- However,
- you do have the option to download the SSH keys which,
- once you've created them.
- All of the templates I'm using are,
- default to Forge.
- None of them here have been kind of customized.
- These are all out the box.
- We're going to be using the mythic C2 install configuration template.
- I'll go through this later.
- So if we head back to our project and select Deployments,
- we can go ahead and create a new deployment.
- I'm just going to call this primary deployment for the platform.
- I'm going to use AWS for this video,
- the region I'm going to select US East 1,
- the tailscale key we added and the SSH key we can go ahead and click Create and that shows up here.
- If we select that,
- we can go ahead and prepare the infrastructure.
- whilst that's preparing,
- I'll go ahead and explain what that does.
- So the prepare stage of a deployment essentially creates all of the underlying infrastructure that we may need to use when we add our own infrastructure.
- So that includes things like the networking vpc,
- any subnets,
- SSH keys within the cloud provider and so on.
- This should only take a couple minutes.
- So I will go ahead and pause the video and I'll resume this once it's done.
- Whilst this deployment is preparing,
- I quickly want to demonstrate the deployment log feature.
- So within the deployment,
- if you head to this deployment log button here,
- we can actually view the deployment logs live.
- You can see here that Terraform is currently creating all of our infrastructure.
- we're currently waiting for the NAT gateway to be created which should hopefully not take too much longer.
- As before,
- I'll resume this video once the infrastructure has been prepared.
- So we can now see that the infrastructure has been prepared.
- and the deployment has moved to this ready to deploy stage.
- At this point we can now add our own infrastructure.
- I'll go ahead and do that.
- I'm going to put mythic C2 as the name for the template.
- We're going to select the C2 server.
- Now this won't actually install Mythic at this stage.
- However,
- this is just the underlying infrastructure which we can later add Mythic to so we can click next.
- It requires some variables.
- first of all is the instance ami.
- I actually have an AMI copied.
- This is just Ubuntu,
- the subnet.
- We're going to place this on the private subnet.
- we're going to select main VPC so we can select add here which is going to add the infrastructure and we can go ahead and deploy that.
- So the deploy stage is essentially used for kind of creating any custom infrastructure that we add.
- Now this shouldn't take too long,
- but whilst that's deploying I'll go ahead and show you the default infrastructure which was created.
- You can see we've got NAT gateways,
- Internet gateways,
- key pairs,
- sort of root table associations,
- any subnets.
- Currently the networking can't be customized.
- there's just kind of a default network for AWS and Also one for DigitalOcean.
- Now in the future I am planning on adding sort of a network manager.
- However this probably won't be for a while.
- So if we head back to our deployment,
- we can see now that the deployment is ready to configure and our mythic C2 instance has been created.
- If we select this again we can view any resources associated with the instance and here we can add configurations.
- So we can go ahead,
- select add,
- edit and then add configuration template.
- We can add the mythic C2 install and it's going to require a few variables.
- So I'm just going to use admin admin as the username and password and Then example Operation as the operation name.
- We can go ahead and add this.
- Now the mythic C2 install does also require Docker to be installed.
- So we can go ahead and add that.
- and we want to make sure that Docker is installed before we install Mythic.
- So we can go ahead,
- save that,
- head back to the deployment and we can select Configure.
- You might have noticed on the previous menu there that a tailscale IP has been automatically assigned.
- So Forge essentially manually kind of overwrites any cloud data provided to use the user init script to install tailscale.
- So as you can see,
- this is configuring.
- If we go ahead and view the deployment log and scroll all the way to the bottom,
- you can see that this is successfully installed Docker and it's now starting Mythic.
- This should only take a little longer.
- If we just give this a moment,
- we should hopefully have a working Mythic instance.
- I'm going to go ahead and pause the video until this is done.
- As you can see,
- Ansible is now finished and the deployment is set to live.
- We can also see the mythic C2 server,
- is running.
- Now.
- My host is connected to Tailscale.
- Therefore we can go into the piece of infrastructure,
- grab If we grab the tailscale ip,
- we should just be able to navigate to the default Mythic port,
- which I believe is 7443.
- Accept this prompt
- and we can connect to our Mythic instance.
- So from here we can log in with the credentials which we created,
- which was admin and admin,
- and you can see that Mythic is up and running now.
- Currently,
- we don't have sort of any,
- kind of plugins installed for Mythic.
- What we can go ahead and do is use the SSH key we created earlier to sort of login and configure Mythic if we need.
- I'm not going to cover that in this video.
- So that's how you can create a basic C2 server within Forge.
- This is obviously a very simple deployment.
- You can make these as simple or as complex as you like.
- If you want to add,
- you know,
- redirectors,
- phishing servers,
- you can go ahead and do that.
- It's also important to remember that the sort of templates included with Forge are just merely examples.
- You should definitely spend some time sort of configuring and adding your own templates which really meet your needs.
- That's going to conclude this video.
- I have lots in store for Forge in the future.
- Hopefully lots of exciting updates upcoming,
- so please stay tuned.
- Thank you,
- everybody.
+I recently released a new version of Lodestar Forge, adding default configuration templates for Mythic C2. Therefore, I thought I'd take this opportunity to showcase the potential of Forge with a quick demo.
 
+If you're not familiar with Forge already, it's a platform which allows you to create and configure infrastructure specifically for Red Team engagements, whilst this series will cover some of the basics; a full overview can be found in the [documentation](https://docs.lodestar-forge.com/).
+
+###  Prerequisites
+
+For this demo, I have created an example project called "Acme Corp Red Team"; we will be using this throughout this tutorial. I will be using a default installation of Forge where I have configured some of the settings which we will run through now.
+
+If we head to the "Infrastructure" tab, you can see I've added a Tailscale tag `lodestar-forge`. This tag is also defined within my Tailscale ACLs and it allows any infrastructure created by Forge to communicate with each other. More information on this can be found [here](https://docs.lodestar-forge.com/docs/integrations/tailscale).
+
+![Infrastructure settings within Lodestar Forge.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/infrastructure-settings.png)
+
+Next in the "Integrations" section, you can see that I have added AWS, DigitalOcean, and Tailscale keys. Tailscale is required, however, only one cloud provider is needed to create infrastrucutre. In this tutorial we will be using AWS.
+
+![Integrations settings within Lodestar Forge.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/integrations-settings.png)
+
+So that Ansible can connect to our infrastructure, I have also added a new SSH key to forge. This can be done within the "SSH Keys" tab. Whilst importing your own keys is currently unsupported (due to Forge requiring both public and private keys), you can create a new one using the "Create Key" button.
+
+![SSH Key settings within Lodestar Forge.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/ssh-key-settings.png)
+
+Whilst there are several other customisation options within Forge, such as the ability to define custom files and templates, these will not be covered in this tutorial. The templates used for this installation are all included by default within Forge.
+
+## Creating Deployments
+
+Now that our Forge instance is configured, we can go ahead and create a new deployment. This can be done by selecting our project, "ACME Corp Red Team", and then selecting the "Create Deployment" button from within the "Deployments" tab.
+
+I will complete this form, selecting the AWS provider I created, alongside the Tailscale Key, and the SSH key. We can also select a region for the deployment to be deployed, such as US East (N. Virginia).
+
+![Creating a deployment using Forge.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/create-deployment.png)
+
+Selecting the "Create" button will proceed to add our deployment to the platform. If we select the deployment within the table, we can view further details, including the status of the deployment, the infrastructure that has been created, and any errors that may have occurred.
+
+### Deployment Preparation
+
+Since we have just created our deployment, there is obviously no infrastructure assigned. However, before we can add our own infrastructure, we must prepare the deployment. The preparation stage will perform the following actions:
+
+- Create a deployment directory on the server.
+- Create any necessary files used by Terraform.
+- Initialise Terraform.
+- Deploy the underlying infrastructure.
+
+Whilst the resources created vary depending on the cloud provider this generally includes things such as the SSH keys, VPCs, Subnets, and so on.
+
+We can go ahead and prepare our deployment by selecting the "Prepare" button. This process will likely take a couple of minutes, depending on the cloud provider used.
+
+Whilst our infrastructure is preparing, I want to take a moment to highlight the deployment log feature. If you select the deployment log button within the "Deployment Status" card, you can view live deployment logs. This is really useful as it allows you to see the progress of your deployment, and any errors which may occur, in real-time.
+
+![Deployment log whilst preparing infrastructure.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/deployment-log.png)
+
+After waiting a few minutes, we can see that the infrastructure has been prepared and has moved to the `ready-to-deploy` stage.
+
+## Custom Infrastructure
+
+At this stage, we can now add our own infrastructure. To do this, I am going to select the "Add" button within the "Infrastructure" card. Here we will be prompted to give our infrastructure a name and select a template to use. I will select the default "C2 Server" template.
+
+<Note>
+This template is a basic C2 server and does not include Mythic C2. We will install specific tools/applications at the configuration stage.
+</Note>
+
+Next we are prompted to add any variables which the template requires, in this case we need an image AMI, subnet and VPC. I will use the AMI `ami-084568db4383264d4` which is Ubuntu (note this is region specific), the private subnet, and main vpc.
+
+![Adding custom infrastructure to Forge.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/infrastructure-variables.png)
+
+After following the above process, we can now see that our custom infrastructure has been added and is in the `pending` state. At this stage, you can go ahead and add any additional infrastructure you require, for simplicity, I will go ahead and only deploy this single peice of infrastrucutre. Deploying infrastrucrure can be done by selecting the "Deploy" button within the "Deployment Status" card.
+
+After a few minutes, we can see that our infrastructure has been deployed and is in the `active` state.
+
+## Configuring Infrastructure
+
+Now that we have infrastructure in place, we can proceed to configure it. To do so, simply select the infrastructure from the table, and then click "Edit" within the configurations section.
+
+Click "Add configuration template" to apply a new template, then select the default "Mythic C2 Install" template. Here we will also have to provide some variables, I will use "admin" as both the username and password, and "Example Operation" as the operation name.
+
+![Adding custom configurations to Forge.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/configuration-variables.png)
+
+Once this form is complete, we can see that the configuration has been added. However, before we save the changes, we must also add Docker which is a prerequisite for Mythic C2. Follow the above steps but instead selecting "Docker Install" as the template.
+
+Finally, we must ensure that Docker is installed before Mythic, therefore, we can use the drag handles to reorder the configurations. Your final configuration should match mine below.
+
+![Final Mythic C2 server configurations.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/infrastructure-configurations.png)
+
+To apply the configurations, click "Save" and then head back to the deployment overview page. From here, we can select "Configure" within the "Deployment Status" card.
+
+The server will now connect to the infrastructure over Tailscale, and apply the configurations we defined using Ansible. There is currently a bug which may prevent Ansible from connecting to the host. If you see this error message, simply click "Configure" again and it should connect on the second attempt.
+
+## Connecting to Mythic
+
+At this stage, we have done everything we need to within Forge. If we needed we could go back and add further infrastructure, or configurations, however, this tutorial will only cover Mythic.
+
+To connect to our Mythic instance, we have a few options. The easiest and recommended option is to connect over Tailscale. Simply connect your host device to the Tailscale network specified earlier and you should have access to any resource created by Forge (depending on your Tailscale ACLs).
+
+To find a host&apos;s Tailscale IP, you can either look within your Tailscale admin console, or select the resource within Forge. Look within the "Networking" card to find the Tailscale IP. Alternatively, if the host is exposed publicly (not recommended), you can also find the public IP information here.
+
+![Infrastructure network addresses.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/infrastructure-networking.png)
+
+To connect to Mythic, use the IP identified and navigate to `https://xxx.xxx.xxx.xxx:7443/` in a web browser. You can authenticate with the credentials you supplied when adding the configruation template.
+
+![Mythic C2 login page.](/images/blogs/deploying-mythic-c2-with-lodestar-forge/mythic-login.png)
+
+## Conclusion
+
+To conclude, in this tutorial we have covered the following:
+
+- Configuring your Lodestar Forge instance to create basic infrastructure.
+- Creating and preparing deployments.
+- Adding custom infrastructure to deployments within Forge.
+- Adding, ordering, and applying configurations to infrastructure created within Forge.
+- Connecting to Mythic C2.
+
+Next steps would likely include configuring your Mythic C2 instance further, however, this will not be covered in this tutorial. You could either utilise the SSH key created by Forge, or create an additional configuration template which can be used by Ansible.
+
+I hope this post has been insightful and has inspired you to give Lodestar Forge a try. I'd highly recommend going beyond the scope of this tutorial and creating your own infrastructure and configuration templates tailored to your needs - this is where Forge really shines.
+
+Stay tuned for some exciting updates and developments coming soon to Forge.
+
+Thanks, J
 <script src="https://player.vimeo.com/api/player.js"></script>
