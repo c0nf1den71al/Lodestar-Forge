@@ -6,9 +6,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "drizzle-orm": "^0.33.0",
+    "drizzle-orm": "^0.44.2",
     "jsonwebtoken": "^9.0.2",
-    "postgres": "^3.4.4"
+    "postgres": "^3.4.7"
   },
   "devDependencies": {
     "drizzle-kit": "^0.31.1"
