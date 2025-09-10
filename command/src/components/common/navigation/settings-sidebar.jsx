@@ -113,7 +113,7 @@ export const SettingsSidebar = () => {
             <SidebarFooter>
                 <Link href="https://lodestar-forge.com" target="_blank">
                     <p className="text-muted-foreground w-full text-xs pb-2 select-none">
-                        Lodestar Forge v0.2.2
+                        Lodestar Forge v0.3.0-dev
                     </p>
                 </Link>
                 <Link href="/projects">
