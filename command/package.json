@@ -59,7 +59,7 @@
     },
     "devDependencies": {
         "eslint": "^9",
-        "eslint-config-next": "15.3.2",
+        "eslint-config-next": "15.5.3",
         "postcss": "^8",
         "tailwindcss": "^4.1.6",
         "tw-animate-css": "^1.2.9"
